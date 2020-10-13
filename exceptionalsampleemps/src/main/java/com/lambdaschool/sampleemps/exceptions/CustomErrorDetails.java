@@ -1,6 +1,6 @@
 package com.lambdaschool.sampleemps.exceptions;
 
-import com.lambdaschool.sampleemps.handlers.HelperFunctions;
+import com.lambdaschool.sampleemps.services.HelperFunctions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.error.DefaultErrorAttributes;
 import org.springframework.stereotype.Component;
@@ -14,7 +14,7 @@ public class CustomErrorDetails
         extends DefaultErrorAttributes
 {
     @Autowired
-    private HelperFunctions helper;
+    private HelperFunctions helperFunctions;
 
     @Override
     public Map<String, Object> getErrorAttributes(
@@ -34,7 +34,7 @@ public class CustomErrorDetails
         errorDetails.put("timestamp", errorAttributes.get("timestamp"));
         errorDetails.put("developerMessage", "path: " + errorAttributes.get("path"));
 
-        errorDetails.put("errors", helper.getConstraintViolation(this.getError(webRequest)));
+        errorDetails.put("errors", helperFunctions.getConstraintViolation(this.getError(webRequest)));
         return errorDetails;
     }
 }

@@ -2,6 +2,7 @@ package com.lambdaschool.sampleemps.handlers;
 
 import com.lambdaschool.sampleemps.exceptions.ResourceNotFoundException;
 import com.lambdaschool.sampleemps.models.ErrorDetail;
+import com.lambdaschool.sampleemps.services.HelperFunctions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -27,7 +28,7 @@ public class RestExceptionHandler
         extends ResponseEntityExceptionHandler
 {
     @Autowired
-    private HelperFunctions helper;
+    private HelperFunctions helperFunctions;
 
     /**
      * The constructor for the RestExceptionHandler. Currently we do not do anything special. We just call the parent constructor.
@@ -52,7 +53,7 @@ public class RestExceptionHandler
         errorDetail.setDetail(ex.getMessage());
         errorDetail.setDeveloperMessage(ex.getClass()
                                                 .getName());
-        errorDetail.setErrors(helper.getConstraintViolation(ex));
+        errorDetail.setErrors(helperFunctions.getConstraintViolation(ex));
 
         return new ResponseEntity<>(errorDetail,
                                     null,
@@ -70,7 +71,7 @@ public class RestExceptionHandler
         errorDetail.setDetail(rnfe.getMessage());
         errorDetail.setDeveloperMessage(rnfe.getClass()
                                                 .getName());
-        errorDetail.setErrors(helper.getConstraintViolation(rnfe));
+        errorDetail.setErrors(helperFunctions.getConstraintViolation(rnfe));
 
         return new ResponseEntity<>(errorDetail,
                                     null,

@@ -18,13 +18,14 @@ public class Email extends Auditable
     @GeneratedValue(strategy = GenerationType.AUTO) // We will let the database decide how to generate it
     private long emailid; // long so we can have many rows
 
+    @javax.validation.constraints.Email(message = "email must be in the form of username@domain.toplevel")
     private String email;
 
     @ManyToOne
     @JoinColumn(name = "employeeid",
             nullable = false)
     // we want to ignore, not display, the emails collection from Employee
-    @JsonIgnoreProperties("emails")
+    @JsonIgnoreProperties(value = "emails", allowSetters = true)
     private Employee employee;
 
     public Email()

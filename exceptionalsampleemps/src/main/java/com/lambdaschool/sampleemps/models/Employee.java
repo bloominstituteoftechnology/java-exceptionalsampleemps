@@ -34,18 +34,16 @@ public class Employee extends Auditable
     @Transient
     public boolean hasvalueforsalary = false;
 
-    // @DecimalMax(value = "120000.0")
-    // @DecimalMin(value = "100000.0")
+    @DecimalMax(value = "250000.0", message = "Salary cannot exceed 250,000")
+    @DecimalMin(value = "0.0", message = "Salary must be a positive number")
     private double salary;
 
     /*
      * emp is the field from EmployeeTitles
-     * CascadeType.ALL says that when we add, update, delete an Employee record, have that affect emp in EmployeeTitle.
-     * Notice that in EmployeeTitle there is no cascade option. This way manipulating an Employee record only affects
-     * the EmployeeTitle join table but does not affect the JobTitle table.
      */
     @OneToMany(mappedBy = "emp",
-            cascade = CascadeType.ALL)
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
     /*
      * When displaying EmployeeTitles from the Employee class, do not display the employee again.
      * However do allow for data to be added to the emp field in EmployeeTitles
